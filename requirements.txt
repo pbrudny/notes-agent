@@ -6,3 +6,4 @@ langchain-core==0.3.28
 psycopg2-binary==2.9.10
 pydantic==2.10.6
 aiofiles==23.2.1
+langsmith>=0.1.0
