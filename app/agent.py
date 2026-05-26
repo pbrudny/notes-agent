@@ -27,9 +27,7 @@ def search_notes(query: str) -> str:
     with get_db() as db:
         notes = (
             db.query(Note)
-            .filter(
-                Note.title.ilike(f"%{query}%") | Note.content.ilike(f"%{query}%")
-            )
+            .filter(Note.title.ilike(f"%{query}%") | Note.content.ilike(f"%{query}%"))
             .order_by(Note.created_at.desc())
             .limit(5)
             .all()
@@ -37,8 +35,7 @@ def search_notes(query: str) -> str:
     if not notes:
         return "No notes found matching that query."
     return "\n\n".join(
-        f"[{n.id}] {n.title} ({n.created_at.strftime('%Y-%m-%d')})\n{n.content}"
-        for n in notes
+        f"[{n.id}] {n.title} ({n.created_at.strftime('%Y-%m-%d')})\n{n.content}" for n in notes
     )
 
 
@@ -46,17 +43,11 @@ def search_notes(query: str) -> str:
 def list_notes() -> str:
     """List the 10 most recent notes."""
     with get_db() as db:
-        notes = (
-            db.query(Note)
-            .order_by(Note.created_at.desc())
-            .limit(10)
-            .all()
-        )
+        notes = db.query(Note).order_by(Note.created_at.desc()).limit(10).all()
     if not notes:
         return "No notes saved yet."
     return "\n".join(
-        f"[{n.id}] {n.title} — {n.created_at.strftime('%Y-%m-%d %H:%M')}"
-        for n in notes
+        f"[{n.id}] {n.title} — {n.created_at.strftime('%Y-%m-%d %H:%M')}" for n in notes
     )
 
 
